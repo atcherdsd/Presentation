@@ -16,8 +16,182 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Relational database management system (RDBMS):
+						- helps to bring in new information
+						- quickly updates information during multi-user access
+						- reduces the risk of error
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Main types of DBMS:
+						1. relational
+						2. object-oriented
+						3. distributed
+						4. NoSQL, the second name is non-relational
+						5. data storage
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Key features of MySQL:
+						1. Support for a large number of table types
+						2. Support for standard SQL commands:
+						- SELECT, DELETE, INSERT, REPLACE, UPDATE
+						- support for operators and functions in the SELECT and WHERE parts of queries
+							working with GROUP BY and ORDER BY
+						- support for group functions COUNT(), AVG(), STD(), SUM(), MAX() and MIN(),
+							the ability to use JOIN in queries, incl. LEFT OUTER JOIN and RIGHT OUTER JOIN				
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Key features of MySQL:
+						3. Available on over 20 platforms including Mac, Windows, Linux and Unix
+						4. Support for many types of data:
+						- signed or unsigned integers 1, 2, 3, 4, and 8 bytes long
+							FLOAT; DOUBLE; CHAR; VARCHAR; BINARY; VARBINARY; TEXT; BLOB DATE; TIME; DATETIME; TIMESTAMP; YEAR; SET; ENUM;
+							OpenGIS Spatial Types
+						- fixed- and variable-length string types
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Key features of MySQL:
+						5. Use of access privilege system and encrypted passwords
+						6. Support for a number of administration systems, for example, MySQL Workbench
+						7. Flexibility 
+						8. High performance 
+						9. Free to use and open source
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Drawbacks:
+						1. Limited functionality (all SQL features are not implemented)
+						2. There may be problems with the reliability of data storage 
+							and transmission due to open source code
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### MySQL Clients:
+						- MySQL Command Line Client
+						- MySQL Shell Console Client
+						- MySQL Workbench Graphical Client
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						# Using MySQL with Node.js
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Create a connection
+						<pre><code data-trim data-noescape>
+							const mysql = require('mysql2');
+							const connection = mysql.createConnection({
+								host: 'localhost',
+								user: 'user',
+								password: 'serverpassword',
+								database: 'users'
+							});
+							connection.connect((err) => {
+								if (err) throw err;
+								
+								console.log('Connected!');
+							});
+						</code></pre>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### CLOSE THE CONNECTION<br><br>
+						<pre><code data-trim data-noescape>
+							connection.end((err) => {
+
+								// The connection is terminated gracefully
+								// Ensures all remaining queries are executed
+								// Then sends a quit packet to the MySQL server.
+							});
+						</code></pre>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Executing queries<hr>
+						### Reading
+						<pre><code data-trim data-noescape>
+							con.query('SELECT * FROM usersinfo', (err,rows) => {
+								if(err) throw err;
+								console.log('Data received from Db:');
+								console.log(rows);
+							});
+							</code>
+							<br>
+							<code data-trim data-noescape>
+								rows.forEach( (row) => {
+									console.log(`${row.name} is ${row.age} years old`);
+								});
+							</code>
+						</pre>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### CREATING
+						<pre><code data-trim data-noescape>
+							const user = { name: 'Craig', age: '32' };
+							con.query('INSERT INTO usersinfo SET ?', user, (err, res) => {
+								if(err) throw err;
+								
+								console.log('Last insert ID:', res.id);
+							});
+						</code></pre>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### UPDATING
+						<pre><code data-trim data-noescape>
+							connection.query(
+								'UPDATE usersinfo SET name = ? Where ID = ?',
+								['Bob', 3],
+								(err, result) => {
+									if (err) throw err;
+									
+									console.log(`Changed ${result.changedRows} row(s)`);
+								}
+							);
+						</code></pre>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Deleting
+						<pre><code data-trim data-noescape>
+							connection.query(
+								'DELETE FROM usersinfo WHERE id = ?', [5], (err, result) => {
+									if (err) throw err;
+									
+									console.log(`Deleted ${result.affectedRows} row(s)`);
+								}
+							);
+						</code></pre>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Thank you for watching!<br><br>
+						My GitHub: [atcherdsd](https://github.com/atcherdsd/)
+					</textarea>
+				</section>
 			</div>
 		</div>
 
@@ -31,7 +205,7 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
+				slideNumber: true,
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
